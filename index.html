@@ -36,24 +36,21 @@
             <p>We offer top-notch IT support and technology solutions to help your business thrive.</p>
             <a href="#services" class="cta-btn">Explore Our Services</a>
             <button id="loginButton" class="cta-btn" onclick="toggleLogin()">Login</button>
+            <button id="registerButton" class="cta-btn" onclick="toggleRegister()">Register</button>
         </div>
     </section>
 
     <section id="login" class="hidden">
         <div class="login_form">
-            <form>
+            <form onsubmit="return handleLogin(event)">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="email" class="form-control" id="exampleInputEmail1" required>
                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-primary" onclick="toggleRegister()">New Client? Register Yourself</button>
@@ -63,7 +60,7 @@
 
     <section id="register" class="hidden">
         <div class="register_form">
-            <form>
+            <form onsubmit="return handleRegister(event)">
                 <div class="mb-3">
                     <label for="registerInputEmail" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="registerInputEmail" required>
@@ -79,6 +76,15 @@
                 <button type="submit" class="btn btn-primary">Register</button>
                 <button type="button" class="btn btn-primary" onclick="toggleLogin()">Already have an account? Login</button>
             </form>
+        </div>
+    </section>
+
+    <section id="clientDetails" class="hidden">
+        <div class="container">
+            <h2>Your Details</h2>
+            <div id="detailsContainer"></div>
+            <button class="btn btn-danger" onclick="deleteAccount()">Delete Account</button>
+            <button class="btn btn-primary" onclick="toggleEdit()">Edit Details</button>
         </div>
     </section>
 
@@ -126,22 +132,98 @@
     </footer>
 
     <script>
+        let currentUser  = null;
+
         function toggleLogin() {
             const loginSection = document.getElementById('login');
             const registerSection = document.getElementById('register');
+            const clientDetailsSection = document.getElementById('clientDetails');
             const loginButton = document.getElementById('loginButton');
-            const registerButton = document.getElementById('loginButton');
+            const registerButton = document.getElementById('registerButton');
 
             // Toggle visibility of the login section
             if (loginSection.classList.contains('hidden')) {
                 loginSection.classList.remove('hidden');
-                loginButton.classList.add('hidden'); // Hide the login button
+                clientDetailsSection.classList.add('hidden');
+                loginButton.classList.add('hidden');
                 registerButton.classList.add('hidden');
             } else {
                 loginSection.classList.add('hidden');
-                loginButton.classList.remove('hidden'); // Show the login button again
-                registerSection.classList.add('hidden');
+                loginButton.classList.remove('hidden');
                 registerButton.classList.remove('hidden');
+            }
+        }
+
+        function toggleRegister() {
+            const loginSection = document.getElementById('login');
+            const registerSection = document.getElementById('register');
+
+            loginSection.classList.add('hidden');
+            registerSection.classList.remove('hidden');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('exampleInputEmail1').value;
+            const password = document.getElementById('exampleInputPassword1').value;
+
+            // Simulate a successful login
+            currentUser  = { email, password };
+            displayUserDetails(); // Corrected function name
+            toggleLogin();
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const email = document.getElementById('registerInputEmail').value;
+            const password = document.getElementById('registerInputPassword').value;
+            const confirmPassword = document.getElementById('registerInputConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Simulate a successful registration
+            currentUser  = { email, password };
+            alert("Registration successful!");
+            displayUserDetails(); // Corrected function name
+            toggleRegister();
+        }
+
+        function displayUserDetails() { // Corrected function name
+            const detailsContainer = document.getElementById('detailsContainer');
+            detailsContainer.innerHTML = `
+                <p>Email: <span id="userEmail">${currentUser .email}</span></p>
+                <p>Password: <span id="userPassword">${currentUser .password}</span></p>
+            `;
+            document.getElementById('clientDetails').classList.remove('hidden');
+        }
+
+        function toggleEdit() {
+            const userEmail = document.getElementById('userEmail');
+            const userPassword = document.getElementById('userPassword');
+
+            if (userEmail.contentEditable === "true") {
+                userEmail.contentEditable = "false";
+                userPassword.contentEditable = "false";
+                userEmail.classList.remove('editable');
+                userPassword.classList.remove('editable');
+            } else {
+                userEmail.contentEditable = "true";
+                userPassword.contentEditable = "true";
+                userEmail.classList.add('editable');
+                userPassword.classList.add('editable');
+            }
+        }
+
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account?')) {
+                currentUser  = null;
+                document.getElementById('clientDetails').classList.add('hidden');
+                document.getElementById('loginButton').classList.remove('hidden');
+                document.getElementById('registerButton').classList.remove('hidden');
+                alert('Your account has been deleted.');
             }
         }
     </script>
