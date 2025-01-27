@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IT Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add some basic styles for demonstration */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <h1>Tech Solutions</h1>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <h2>Reliable IT Solutions for Your Business</h2>
+            <p>We offer top-notch IT support and technology solutions to help your business thrive.</p>
+            <a href="#services" class="cta-btn">Explore Our Services</a>
+            <button id="loginButton" class="cta-btn" onclick="toggleLogin()">Login</button>
+        </div>
+    </section>
+
+    <section id="login" class="hidden">
+        <div class="login_form">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-primary" onclick="toggleRegister()">New Client? Register Yourself</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="register" class="hidden">
+        <div class="register_form">
+            <form>
+                <div class="mb-3">
+                    <label for="registerInputEmail" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="registerInputEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerInputPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="registerInputPassword" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerInputConfirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="registerInputConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="button" class="btn btn-primary" onclick="toggleLogin()">Already have an account? Login</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="service-box">
+                <h3>IT Support</h3>
+                <img src="./itsupport.jpg" alt="IT Support">
+                <p>Expert technical support to ensure your systems are always running smoothly.</p>
+            </div>
+            <div class="service-box">
+                <h3>Cloud Solutions</h3>
+                <img src="./cloud.jpg" alt="Cloud Solutions">
+                <p>Efficient cloud solutions to help you manage your data and enhance collaboration.</p>
+            </div>
+            <div class="service-box">
+                <h3>Cybersecurity</h3>
+                <img src="./cybersecurity.jpg" alt="Cybersecurity">
+                <p>Protect your business from cyber threats with our advanced security services.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>We are a team of experienced IT professionals dedicated to providing innovative and reliable IT
+                solutions. Our mission is to help businesses grow by leveraging technology to improve efficiency and
+                security.</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <h3>abc02@gmail.com</h3>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Made By Siddheswar Sahoo</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleLogin() {
+            const loginSection = document.getElementById('login');
+            const registerSection = document.getElementById('register');
+            const loginButton = document.getElementById('loginButton');
+            const registerButton = document.getElementById('loginButton');
+
+            // Toggle visibility of the login section
+            if (loginSection.classList.contains('hidden')) {
+                loginSection.classList.remove('hidden');
+                loginButton.classList.add('hidden'); // Hide the login button
+                registerButton.classList.add('hidden');
+            } else {
+                loginSection.classList.add('hidden');
+                loginButton.classList.remove('hidden'); // Show the login button again
+                registerSection.classList.add('hidden');
+                registerButton.classList.remove('hidden');
+            }
+        }
+    </script>
+
+</body>
+
+</html>
